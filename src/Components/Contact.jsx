@@ -1,4 +1,5 @@
-import React from "react";
+import React, { useRef } from "react";
+import { motion } from "framer-motion";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
   faEnvelope,
@@ -7,95 +8,198 @@ import {
 } from "@fortawesome/free-solid-svg-icons";
 
 const Contact = () => {
+  const formRef = useRef(null);
+
+  const contactMethods = [
+    {
+      icon: faEnvelope,
+      text: "selvakumarthushanthan5@gmail.com",
+      link: "mailto:selvakumarthushanthan5@gmail.com",
+    },
+    {
+      icon: faPhone,
+      text: "+94789586877",
+      link: "tel:+94789586877",
+    },
+    {
+      icon: faMapMarkerAlt,
+      text: "Telbedde, Badulla, Sri Lanka",
+    },
+  ];
+
   return (
-    <div className="bg-black text-white py-20" id="about">
-      <div className="container mx-auto px-8 md:px-16 lg:px-24">
-        <h2 className="text-4xl font-bold text-center mb-12 text-shadow-blue">
-          Contact Me
-        </h2>
-        <div className="flex flex-col md:flex-row items-center md:space-x-12">
-          <div className="flex-1">
-            <h3 className="text-3xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-green-400 to-blue-500 mb-4">
-              Let's Talk
+    <section id="contact" className="relative py-20 bg-black overflow-hidden">
+      {/* Background elements */}
+      <div className="absolute inset-0 opacity-10">
+        <div className="absolute top-0 left-0 w-1/3 h-full bg-gradient-to-b from-green-400/10 to-transparent"></div>
+        <div className="absolute bottom-0 right-0 w-1/3 h-full bg-gradient-to-t from-blue-500/10 to-transparent"></div>
+      </div>
+
+      <div className="container mx-auto px-6 relative">
+        {/* Section Title */}
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.5 }}
+          viewport={{ once: true }}
+          className="text-center mb-16">
+          <h2 className="text-4xl md:text-5xl font-bold mb-4">
+            <span className="text-transparent bg-clip-text bg-gradient-to-r from-green-400 to-blue-500">
+              Contact Me
+            </span>
+          </h2>
+          <p className="text-gray-400 max-w-2xl mx-auto">
+            Let's collaborate on your next project
+          </p>
+        </motion.div>
+
+        <div className="flex flex-col lg:flex-row gap-12">
+          {/* Contact Info */}
+          <motion.div
+            initial={{ opacity: 0, x: -50 }}
+            whileInView={{ opacity: 1, x: 0 }}
+            transition={{ duration: 0.8 }}
+            viewport={{ once: true }}
+            className="lg:w-1/2">
+            <h3 className="text-2xl font-bold mb-6 text-transparent bg-clip-text bg-gradient-to-r from-green-400 to-blue-500">
+              Get In Touch
             </h3>
-            <p>
+
+            <p className="text-gray-400 mb-8">
               I'm currently available for freelance projects and full-time
-              opportunities. If you're interested in collaborating or just want
-              to say hi, feel free to reach out to me using the form below or
-              through my social media profiles.
+              opportunities. Reach out to collaborate or just say hi!
             </p>
-            <div className="mb-4 mt-8">
-              <FontAwesomeIcon
-                icon={faEnvelope}
-                className="text-green-400 mr-2"
-              />
-              <a
-                href="mailto:selvakumarthushanthan5@gmail.com"
-                className="hover:underline">
-                selvakumarthushanthan5@gmail.com
-              </a>
+
+            <div className="space-y-6">
+              {contactMethods.map((method, index) => (
+                <motion.div
+                  key={index}
+                  initial={{ opacity: 0, y: 20 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  transition={{ delay: index * 0.1 + 0.2 }}
+                  viewport={{ once: true }}
+                  className="flex items-start">
+                  <div className="text-green-400 mt-1 mr-4">
+                    <FontAwesomeIcon icon={method.icon} size="lg" />
+                  </div>
+                  {method.link ? (
+                    <a
+                      href={method.link}
+                      className="text-gray-300 hover:text-white transition-colors duration-300">
+                      {method.text}
+                    </a>
+                  ) : (
+                    <span className="text-gray-300">{method.text}</span>
+                  )}
+                </motion.div>
+              ))}
             </div>
-            <div className="mb-4 mt-8">
-              <FontAwesomeIcon icon={faPhone} className="text-green-400 mr-2" />
-              <span>+94789586877</span>
-            </div>
-            <div className="mb-4 mt-8">
-              <FontAwesomeIcon
-                icon={faMapMarkerAlt}
-                className="text-green-400 mr-2"
-              />
-              <span>Telbedde, Badulla, Sri Lanka</span>
-            </div>
-          </div>
-          <div className="flex-1 w-full">
-            <form action="" className="space-y-4">
-              <div>
-                <label htmlFor="name" className="block mb-2">
+
+            {/* Social Links */}
+            <motion.div
+              initial={{ opacity: 0 }}
+              whileInView={{ opacity: 1 }}
+              transition={{ delay: 0.6 }}
+              viewport={{ once: true }}
+              className="mt-12">
+              <h4 className="text-gray-400 mb-4">Follow Me</h4>
+              <div className="flex space-x-4">
+                {["LinkedIn", "GitHub", "Twitter", "Instagram"].map(
+                  (social, index) => (
+                    <motion.a
+                      key={index}
+                      href="#"
+                      whileHover={{ y: -3 }}
+                      className="w-10 h-10 rounded-full bg-gray-900 flex items-center justify-center text-gray-300 hover:text-white hover:bg-gray-800 transition-all duration-300">
+                      {social.charAt(0)}
+                    </motion.a>
+                  )
+                )}
+              </div>
+            </motion.div>
+          </motion.div>
+
+          {/* Contact Form */}
+          <motion.div
+            initial={{ opacity: 0, x: 50 }}
+            whileInView={{ opacity: 1, x: 0 }}
+            transition={{ duration: 0.8 }}
+            viewport={{ once: true }}
+            className="lg:w-1/2">
+            <form
+              ref={formRef}
+              className="bg-gray-900/70 backdrop-blur-sm rounded-2xl p-8 shadow-xl border border-gray-800">
+              <motion.div
+                initial={{ opacity: 0 }}
+                whileInView={{ opacity: 1 }}
+                transition={{ delay: 0.2 }}
+                viewport={{ once: true }}
+                className="mb-6">
+                <label htmlFor="name" className="block text-gray-300 mb-2">
                   Your Name
                 </label>
                 <input
                   type="text"
                   id="name"
                   name="name"
-                  className="w-full p-2 rounded bg-gray-800 border-gray-600 focus:border-green-400"
-                  placeholder="Enter Your Name"
+                  placeholder="John Doe"
+                  className="w-full px-4 py-3 rounded-lg bg-gray-800 border border-gray-700 focus:border-green-400 focus:ring-2 focus:ring-green-400/30 text-white transition-all duration-300"
                 />
-              </div>
-              <div>
-                <label
-                  htmlFor="mail"
-                  className="block mb-2 focus:border-green-400">
-                  Your E-mail
+              </motion.div>
+
+              <motion.div
+                initial={{ opacity: 0 }}
+                whileInView={{ opacity: 1 }}
+                transition={{ delay: 0.3 }}
+                viewport={{ once: true }}
+                className="mb-6">
+                <label htmlFor="email" className="block text-gray-300 mb-2">
+                  Your Email
                 </label>
                 <input
                   type="email"
-                  id="mail"
+                  id="email"
                   name="email"
-                  className="w-full p-2 rounded bg-gray-800 border-gray-600  focus:border-green-400"
-                  placeholder="Enter Your Email"
+                  placeholder="john@example.com"
+                  className="w-full px-4 py-3 rounded-lg bg-gray-800 border border-gray-700 focus:border-green-400 focus:ring-2 focus:ring-green-400/30 text-white transition-all duration-300"
                 />
-              </div>
-              <div>
-                <label htmlFor="message" className="block mb-2">
+              </motion.div>
+
+              <motion.div
+                initial={{ opacity: 0 }}
+                whileInView={{ opacity: 1 }}
+                transition={{ delay: 0.4 }}
+                viewport={{ once: true }}
+                className="mb-6">
+                <label htmlFor="message" className="block text-gray-300 mb-2">
                   Your Message
                 </label>
                 <textarea
                   id="message"
                   name="message"
-                  placeholder="Enter Your Message Here...."
-                  rows={5}
-                  className="w-full p-2 rounded bg-gray-800 border-gray-600  focus:border-green-400"></textarea>
-              </div>
-              <button
-                type="submit"
-                className="bg-gradient-to-r from-green-400 to-blue-500 text-white transform transition-transform duration-300 hover:scale-105 px-8 py-2 rounded-full">
-                Send
-              </button>
+                  rows="5"
+                  placeholder="Hello, I'd like to talk about..."
+                  className="w-full px-4 py-3 rounded-lg bg-gray-800 border border-gray-700 focus:border-green-400 focus:ring-2 focus:ring-green-400/30 text-white transition-all duration-300"></textarea>
+              </motion.div>
+
+              <motion.div
+                initial={{ opacity: 0 }}
+                whileInView={{ opacity: 1 }}
+                transition={{ delay: 0.5 }}
+                viewport={{ once: true }}>
+                <motion.button
+                  type="submit"
+                  whileHover={{ scale: 1.02 }}
+                  whileTap={{ scale: 0.98 }}
+                  className="w-full px-6 py-3 rounded-full bg-gradient-to-r from-green-400 to-blue-500 text-white font-medium shadow-lg hover:shadow-green-400/30 transition-all duration-300">
+                  Send Message
+                </motion.button>
+              </motion.div>
             </form>
-          </div>
+          </motion.div>
         </div>
       </div>
-    </div>
+    </section>
   );
 };
 
