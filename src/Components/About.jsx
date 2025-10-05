@@ -1,6 +1,6 @@
 import React from "react";
 import { motion } from "framer-motion";
-import about_img from "../assets/my-img-1.jpg";
+import about_img from "../assets/my-img-1.png";
 
 const About = () => {
   const stats = [
@@ -42,24 +42,7 @@ const About = () => {
           <div className="w-20 h-1 bg-gradient-to-r from-green-400 to-blue-500 mx-auto"></div>
         </motion.div>
 
-        <div className="flex flex-col lg:flex-row items-center gap-12">
-          {/* Image with floating animation */}
-          <motion.div
-            initial={{ opacity: 0, x: -50 }}
-            whileInView={{ opacity: 1, x: 0 }}
-            transition={{ duration: 0.8 }}
-            viewport={{ once: true }}
-            className="lg:w-1/3 relative">
-            <div className="relative group">
-              <div className="absolute -inset-4 rounded-3xl bg-gradient-to-r from-green-400 to-blue-500 opacity-20 group-hover:opacity-30 blur-lg transition-all duration-500 animate-tilt"></div>
-              <img
-                src={about_img}
-                alt="About Me"
-                className="relative rounded-3xl w-full max-w-md object-cover shadow-2xl border-4 border-white/10 group-hover:border-white/20 transition-all duration-500 z-10"
-              />
-            </div>
-          </motion.div>
-
+        <div className="flex justify-center items-center gap-12">
           {/* Content */}
           <motion.div
             initial={{ opacity: 0, x: 50 }}
