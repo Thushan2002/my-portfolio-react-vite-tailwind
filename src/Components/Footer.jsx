@@ -6,16 +6,14 @@ import {
   faLinkedin,
   faGithub,
   faInstagram,
-  faTwitter,
 } from "@fortawesome/free-brands-svg-icons";
 
 const Footer = () => {
   const socialLinks = [
-    { icon: faLinkedin, url: "#" },
-    { icon: faGithub, url: "#" },
-    { icon: faTwitter, url: "#" },
-    { icon: faInstagram, url: "#" },
-    { icon: faFacebook, url: "#" },
+    { icon: faLinkedin, url: "www.linkedin.com/in/selvakumar-thushanthan" },
+    { icon: faGithub, url: "https://github.com/Thushan2002" },
+    { icon: faInstagram, url: "https://www.instagram.com/thu_shan" },
+    { icon: faFacebook, url: "https://www.facebook.com/keeth.karan" },
   ];
 
   const footerLinks = [

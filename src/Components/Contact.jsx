@@ -1,4 +1,4 @@
-import React, { useRef } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { motion } from "framer-motion";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
@@ -6,20 +6,42 @@ import {
   faPhone,
   faMapMarkerAlt,
 } from "@fortawesome/free-solid-svg-icons";
-
+import {
+  faFacebook,
+  faLinkedin,
+  faGithub,
+  faInstagram,
+} from "@fortawesome/free-brands-svg-icons";
+import { useForm, ValidationError } from "@formspree/react";
 const Contact = () => {
   const formRef = useRef(null);
+  const [message, setMessage] = useState("");
+  const [state, handleSubmit] = useForm("xyznpbyn");
+
+  useEffect(() => {
+    if (state.succeeded) {
+      setMessage("Thanks for Contacting!");
+      if (formRef.current) {
+        formRef.current.reset();
+      }
+      const timer = setTimeout(() => {
+        setMessage("");
+      }, 5000);
+
+      return () => clearTimeout(timer);
+    }
+  }, [state.succeeded]);
 
   const contactMethods = [
     {
       icon: faEnvelope,
-      text: "selvakumarthushanthan5@gmail.com",
-      link: "mailto:selvakumarthushanthan5@gmail.com",
+      text: "selvakumarthushanthan4@gmail.com",
+      link: "mailto:selvakumarthushanthan4@gmail.com",
     },
     {
       icon: faPhone,
-      text: "+94789586877",
-      link: "tel:+94789586877",
+      text: "+94762508886",
+      link: "tel:+94762508886",
     },
     {
       icon: faMapMarkerAlt,
@@ -27,14 +49,26 @@ const Contact = () => {
     },
   ];
 
+  const socialLinks = [
+    {
+      name: "LinkedIn",
+      icon: faLinkedin,
+      url: "www.linkedin.com/in/selvakumar-thushanthan",
+    },
+    { name: "GitHub", icon: faGithub, url: "https://github.com/Thushan2002" },
+    {
+      name: "Instagram",
+      icon: faInstagram,
+      url: "https://www.instagram.com/thu_shan",
+    },
+    {
+      name: "Facebook",
+      icon: faFacebook,
+      url: "https://www.facebook.com/keeth.karan",
+    },
+  ];
   return (
     <section id="contact" className="relative py-20 bg-black overflow-hidden">
-      {/* Background elements */}
-      <div className="absolute inset-0 opacity-10">
-        <div className="absolute top-0 left-0 w-1/3 h-full bg-gradient-to-b from-green-400/10 to-transparent"></div>
-        <div className="absolute bottom-0 right-0 w-1/3 h-full bg-gradient-to-t from-blue-500/10 to-transparent"></div>
-      </div>
-
       <div className="container mx-auto px-6 relative">
         {/* Section Title */}
         <motion.div
@@ -60,7 +94,7 @@ const Contact = () => {
             whileInView={{ opacity: 1, x: 0 }}
             transition={{ duration: 0.8 }}
             viewport={{ once: true }}
-            className="lg:w-1/2">
+            className="lg:w-1/2 w-1/3 p-4 h-full bg-gradient-to-b from-green-400/10 to-transparent rounded-xl">
             <h3 className="text-2xl font-bold mb-6 text-transparent bg-clip-text bg-gradient-to-r from-green-400 to-blue-500">
               Get In Touch
             </h3>
@@ -104,17 +138,15 @@ const Contact = () => {
               className="mt-12">
               <h4 className="text-gray-400 mb-4">Follow Me</h4>
               <div className="flex space-x-4">
-                {["LinkedIn", "GitHub", "Twitter", "Instagram"].map(
-                  (social, index) => (
-                    <motion.a
-                      key={index}
-                      href="#"
-                      whileHover={{ y: -3 }}
-                      className="w-10 h-10 rounded-full bg-gray-900 flex items-center justify-center text-gray-300 hover:text-white hover:bg-gray-800 transition-all duration-300">
-                      {social.charAt(0)}
-                    </motion.a>
-                  )
-                )}
+                {socialLinks.map((social, index) => (
+                  <motion.a
+                    key={index}
+                    href={social.url}
+                    whileHover={{ y: -3 }}
+                    className="w-10 h-10 rounded-full bg-gray-900 flex items-center justify-center text-gray-300 hover:text-white hover:bg-gray-800 transition-all duration-300">
+                    {social.name.charAt(0)}
+                  </motion.a>
+                ))}
               </div>
             </motion.div>
           </motion.div>
@@ -125,8 +157,9 @@ const Contact = () => {
             whileInView={{ opacity: 1, x: 0 }}
             transition={{ duration: 0.8 }}
             viewport={{ once: true }}
-            className="lg:w-1/2">
+            className="lg:w-1/2 w-1/3 p-4 h-full bg-gradient-to-b from-blue-400/10 to-transparent rounded-xl">
             <form
+              onSubmit={handleSubmit}
               ref={formRef}
               className="bg-gray-900/70 backdrop-blur-sm rounded-2xl p-8 shadow-xl border border-gray-800">
               <motion.div
@@ -144,6 +177,11 @@ const Contact = () => {
                   name="name"
                   placeholder="John Doe"
                   className="w-full px-4 py-3 rounded-lg bg-gray-800 border border-gray-700 focus:border-green-400 focus:ring-2 focus:ring-green-400/30 text-white transition-all duration-300"
+                />{" "}
+                <ValidationError
+                  prefix="Name"
+                  field="name"
+                  errors={state.errors}
                 />
               </motion.div>
 
@@ -163,6 +201,11 @@ const Contact = () => {
                   placeholder="john@example.com"
                   className="w-full px-4 py-3 rounded-lg bg-gray-800 border border-gray-700 focus:border-green-400 focus:ring-2 focus:ring-green-400/30 text-white transition-all duration-300"
                 />
+                <ValidationError
+                  prefix="Email"
+                  field="email"
+                  errors={state.errors}
+                />
               </motion.div>
 
               <motion.div
@@ -180,6 +223,11 @@ const Contact = () => {
                   rows="5"
                   placeholder="Hello, I'd like to talk about..."
                   className="w-full px-4 py-3 rounded-lg bg-gray-800 border border-gray-700 focus:border-green-400 focus:ring-2 focus:ring-green-400/30 text-white transition-all duration-300"></textarea>
+                <ValidationError
+                  prefix="Message"
+                  field="message"
+                  errors={state.errors}
+                />
               </motion.div>
 
               <motion.div
@@ -188,12 +236,14 @@ const Contact = () => {
                 transition={{ delay: 0.5 }}
                 viewport={{ once: true }}>
                 <motion.button
+                  disabled={state.submitting}
                   type="submit"
                   whileHover={{ scale: 1.02 }}
                   whileTap={{ scale: 0.98 }}
                   className="w-full px-6 py-3 rounded-full bg-gradient-to-r from-green-400 to-blue-500 text-white font-medium shadow-lg hover:shadow-green-400/30 transition-all duration-300">
                   Send Message
                 </motion.button>
+                <p className="mt-6 text-center text-xl text-white">{message}</p>
               </motion.div>
             </form>
           </motion.div>
